@@ -344,6 +344,7 @@ def setTab_about(self: QWidget, basel):
                     parent=self,
                     grid=[
                         ["UI语言", __delayloadlangs],
+                        ["开发者", lambda: QLabel("zhoushang2")],
                     ],
                 ),
             ],
