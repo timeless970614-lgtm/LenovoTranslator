@@ -14,7 +14,7 @@
         "toolbar": 2372
     },
     "countdownSeconds": 3,
-    "developerMode": false,
+    "developerMode": true,
     "debugMode": false,
     "benchmarkMode": false,
     "disableTopmost": false,

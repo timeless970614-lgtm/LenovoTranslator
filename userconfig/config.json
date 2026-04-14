@@ -31,14 +31,14 @@
     "ocrselectalpha": 0.3,
     "foldstatus": {
         "ocr": {
-            "other": false
+            "other": true
         },
         "others": {
-            "fts": false,
-            "netservice": false,
-            "sr": false,
-            "proxy": false,
-            "copy": false
+            "fts": true,
+            "netservice": true,
+            "sr": true,
+            "proxy": true,
+            "copy": true
         },
         "proxy": {
             "gpt": true,
@@ -284,7 +284,7 @@
         "displaymode": 0,
         "insertspace_policy": 0,
         "changefont": false,
-        "changefont_font": "",
+        "changefont_font": "8514oem",
         "changecharset": false,
         "changecharset_charset": 2,
         "limittextlength_use": false,
@@ -2032,7 +2032,7 @@
     "languageuse2": "zh",
     "rendertext_using": "webview",
     "lasttime3": 1776136948.2252913,
-    "lasttime2": 1776168391.9924219,
+    "lasttime2": 1776168513.521091,
     "load_doc_or_log": [
         10,
         15,
