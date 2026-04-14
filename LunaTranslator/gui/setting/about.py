@@ -5,6 +5,10 @@ from gui.usefulwidget import makescrollgrid, SuperCombo
 from language import UILanguages, Languages
 
 
+def get_about_info():
+    return "LenovoTranslator"
+
+
 def changeUIlanguage(_):
     languageChangeEvent = QEvent(QEvent.Type.LanguageChange)
     QApplication.sendEvent(QApplication.instance(), languageChangeEvent)
