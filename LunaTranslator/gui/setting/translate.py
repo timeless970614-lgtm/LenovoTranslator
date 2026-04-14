@@ -1862,14 +1862,9 @@ def leftwidget(self, ref: "list[CollapsibleBoxWithButton]"):
         lambda: os.startfile(dynamiclink("guochandamoxing.html", docs=True))
     )
 
-    btn4 = AutoScaleImageButton(
-        r"files\static\llama.cpp.light.png", r"files\static\llama.cpp.dark.png"
-    )
-    btn4.setToolTip("llama.cpp Launcher")
-    btn4.clicked.connect(functools.partial(__showllamacpp, ref))
     lb = QLabel()
     lb.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-    return [btn3, btn, btn2, lb, btn4]
+    return [btn3, btn, btn2, lb]
 
 
 def __llmfold(self):

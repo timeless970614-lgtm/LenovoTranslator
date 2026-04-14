@@ -48,7 +48,7 @@
         "ts": {
             "outdate": false,
             "gpt": true,
-            "api": false,
+            "api": true,
             "free": true,
             "special": false
         }
@@ -298,7 +298,25 @@
     "buttonsize": 25,
     "buttonsize2": 18,
     "language_setted_2.4.5": false,
-    "postprocess_rank": [],
+    "postprocess_rank": [
+        "stringreplace",
+        "_remove_non_shiftjis_char",
+        "_remove_control",
+        "_remove_symbo",
+        "_remove_not_in_ja_bracket",
+        "_1",
+        "lines_threshold_1",
+        "_2",
+        "_3",
+        "_3_2",
+        "_4",
+        "_6EX",
+        "_91",
+        "_92",
+        "_10",
+        "_13EX",
+        "_11"
+    ],
     "text_area_background": false,
     "text_area_background_alpha": 50,
     "text_area_background_color": "#ff0000",
@@ -439,7 +457,7 @@
     "word_hover_action_usewb2": false,
     "min_auto_height": 0,
     "iskongxin": true,
-    "isshowrawtext": true,
+    "isshowrawtext": false,
     "kanarate": 0.5,
     "rawtextcolor": "#000000",
     "backcolor": "#ffaaff",
@@ -1031,7 +1049,11 @@
         "windowstts": {
             "use": true,
             "name": "WindowsTTS",
-            "type": "offline"
+            "type": "offline",
+            "voice": [
+                1,
+                "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Voice.zh-CN.Yunxi.1_1.0.5.0_x64__cw5n1h2txyewy"
+            ]
         },
         "huoshantts": {
             "use": false,
@@ -1577,10 +1599,10 @@
             "autokill": true
         },
         "texthook": {
-            "use": true
+            "use": false
         },
         "ocr": {
-            "use": false
+            "use": true
         },
         "copy": {
             "use": false
@@ -2003,10 +2025,10 @@
     "use_ocr_preprocess": false,
     "extraLangs": [],
     "dragable": true,
-    "languageuse2": "en",
+    "languageuse2": "zh",
     "rendertext_using": "webview",
     "lasttime3": 1776136948.2252913,
-    "lasttime2": 1776136948.2252922,
+    "lasttime2": 1776167902.8604324,
     "load_doc_or_log": [
         10,
         15,
