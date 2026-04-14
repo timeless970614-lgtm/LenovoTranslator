@@ -1,0 +1,75 @@
+# LenovoTranslator
+
+基于 [LunaTranslator](https://github.com/HIllya51/LunaTranslator) 的定制翻译工具。
+
+## 简介
+
+LenovoTranslator 是一款专为游戏文本翻译设计的工具，支持多种翻译引擎和实时翻译功能。
+
+## 功能特性
+
+- **多翻译引擎支持** - 支持多种在线/离线翻译服务
+- **实时翻译** - 游戏文本实时捕获与翻译
+- **文本处理** - 支持文本预处理、过滤等功能
+- **快捷键操作** - 可自定义快捷键控制翻译流程
+
+## 版本信息
+
+- **版本**: v10.15.6.25
+- **开发者**: zhoushang2
+
+## 快速开始
+
+### 运行程序
+
+双击 `LenovoTranslator.exe` 启动程序。
+
+### 基本设置
+
+1. **核心设置** - 配置翻译引擎、文本源等
+2. **翻译设置** - 选择翻译服务、调整翻译参数
+3. **显示设置** - 自定义翻译结果显示样式
+4. **文本处理** - 设置文本过滤、预处理规则
+5. **快捷按键** - 自定义操作快捷键
+6. **关于** - 查看软件信息和UI语言设置
+
+## 目录结构
+
+```
+LenovoTranslator/
+├── LenovoTranslator.exe    # 主程序
+├── LunaTranslator/         # Python 源代码
+│   ├── gui/               # 界面模块
+│   ├── translator/        # 翻译引擎
+│   └── ...
+├── userconfig/            # 用户配置
+└── files/                 # 资源文件
+```
+
+## 定制修改
+
+本版本基于 LunaTranslator 进行了以下定制：
+
+- 简化设置界面，移除不必要的选项
+- 优化翻译设置，移除 LLaMA 相关功能
+- 简化热键设置，移除 TTS 模块
+- 自定义应用图标
+- 添加开发者信息
+
+## 技术栈
+
+- Python 3.13
+- Qt (PyQt5/PySide6)
+- 嵌入式 Python 解释器
+
+## 致谢
+
+本项目基于 [LunaTranslator](https://github.com/HIllya51/LunaTranslator) 开发，感谢原作者 HIllya51 的杰出工作。
+
+## 许可证
+
+遵循原项目许可证。
+
+---
+
+*Made with ❤️ by zhoushang2*
