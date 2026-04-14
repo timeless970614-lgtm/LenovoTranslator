@@ -1,6 +1,6 @@
 # LenovoTranslator
 
-基于 [LunaTranslator](https://github.com/HIllya51/LunaTranslator) 的定制翻译工具。
+一款轻量级游戏文本翻译工具，支持实时捕获与多引擎翻译。
 
 ## 简介
 
@@ -64,7 +64,7 @@ LenovoTranslator/
 
 ## 致谢
 
-本项目基于 [LunaTranslator](https://github.com/HIllya51/LunaTranslator) 开发，感谢原作者 HIllya51 的杰出工作。
+感谢所有开源贡献者的支持。
 
 ## 许可证
 
