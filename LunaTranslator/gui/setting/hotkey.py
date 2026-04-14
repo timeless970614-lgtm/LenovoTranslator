@@ -453,7 +453,6 @@ def setTab_quick_lazy(self, ls):
     for name in ls:
         d = globalconfig["quick_setting"]["all"][name]
         l = [
-            D_getdoclink("fastkeys.html#anchor-" + name),
             (d["name"], 2),
             D_getsimpleswitch(
                 d,
@@ -468,9 +467,9 @@ def setTab_quick_lazy(self, ls):
             (functools.partial(delaycreatereferlabels, self, name), -1),
         ]
         if name in hotkeysettings:
-            l[1] = (l[1][0], 1)
+            l[0] = (l[0][0], 1)
             l.insert(
-                2,
+                1,
                 D_getIconButton(
                     callback=functools.partial(hotkeysettings[name], self),
                     tips="设置",
