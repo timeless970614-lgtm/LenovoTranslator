@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+cache/
+userconfig/
+translation_record/
+python313._pth
+__main__.py
+_launcher.py
+temp/
+*.log
+_defaultconfig/
+sitecustomize.py
