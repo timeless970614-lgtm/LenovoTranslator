@@ -342,11 +342,8 @@ def setTab_about(self: QWidget, basel):
                 dict(
                     name="aboutlayout",
                     parent=self,
-                    hiderows=[2],
                     grid=[
                         ["UI语言", __delayloadlangs],
-                        ["自动更新", functools.partial(updatexx, self)],
-                        [functools.partial(progress___, self)],
                     ],
                 ),
             ],
@@ -404,10 +401,4 @@ def setTab_about(self: QWidget, basel):
             # [getboxlayout([D_getIconButton(____, icon="fa.calendar"), ""])],
         ],
         basel,
-    )
-    gobject.base.connectsignal(
-        gobject.base.progresssignal4,
-        functools.partial(
-            _progresssignal4, self.aboutlayout.layout(), self.downloadprogress
-        ),
     )
