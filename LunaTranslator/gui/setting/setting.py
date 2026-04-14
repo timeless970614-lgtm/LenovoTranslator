@@ -5,12 +5,7 @@ import time, gobject
 from myutils.config import globalconfig
 from gui.usefulwidget import closeashidewindow, makesubtab_lazy
 from gui.setting.textinput import setTabOne_lazy
-from gui.setting.translate import setTabTwo_lazy
 from gui.setting.display import setTabThree_lazy
-from gui.setting.tts import setTab5
-from gui.setting.cishu import setTabcishu
-from gui.setting.hotkey import setTab_quick, registrhotkeys
-from gui.setting.transopti import setTab7_lazy
 from gui.setting.about import setTab_about
 from gui.dynalang import LListWidgetItem, LListWidget
 
@@ -77,7 +72,6 @@ class Setting(closeashidewindow):
         super(Setting, self).__init__(parent, globalconfig["setting_geo_2"])
         self.setWindowIcon(qtawesome.icon("fa.gear"))
         self.isfirst = True
-        registrhotkeys(self)
         gobject.base.settin_ui_showsignal.connect(self.showsignal)
 
     def showEvent(self, e: QShowEvent):
@@ -87,29 +81,18 @@ class Setting(closeashidewindow):
         super().showEvent(e)
 
     def firstshow(self):
-
         self.setMinimumSize(100, 100)
         self.setWindowTitleWithVersionWithUserconfig("设置")
 
         self.tab_widget, do = makesubtab_lazy(
             [
                 "核心设置",
-                "翻译设置",
                 "显示设置",
-                "文本处理",
-                "辞书设置",
-                "语音合成",
-                "快捷按键",
                 "关于软件",
             ],
             [
                 functools.partial(setTabOne_lazy, self),
-                functools.partial(setTabTwo_lazy, self),
                 functools.partial(setTabThree_lazy, self),
-                functools.partial(setTab7_lazy, self),
-                functools.partial(setTabcishu, self),
-                functools.partial(setTab5, self),
-                functools.partial(setTab_quick, self),
                 functools.partial(setTab_about, self),
             ],
             klass=TabWidget,
@@ -118,6 +101,4 @@ class Setting(closeashidewindow):
         self.setCentralWidget(self.tab_widget)
         do()
         self.tab_widget.adjust_list_widget_width()
-        index = 0
-        self.tab_widget.setCurrentIndex(index)
-        gobject.base.switchtotspage.connect(lambda: self.tab_widget.setCurrentIndex(1))
+        self.tab_widget.setCurrentIndex(0)

@@ -1,4 +1,4 @@
 @echo off
 cd /d "%~dp0"
-LunaTranslator.exe %*
+LenovoTranslator.exe %*
 pause
