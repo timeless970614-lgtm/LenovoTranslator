@@ -1300,8 +1300,9 @@ class TranslatorWindow(resizableframeless):
         )
 
     def showabout(self):
-
         _t = get_about_info()
+        if not _t:
+            return
         if not globalconfig["adaptive_height"]:
             _t = _t.replace("\n\n", "\n")
         self.showMarkDown(_t)

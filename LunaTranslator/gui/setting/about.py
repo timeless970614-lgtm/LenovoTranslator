@@ -162,19 +162,7 @@ class MDLabel1(MDLabel):
 
 
 def get_about_info():
-    lang = getlanguse()
-    t3 = "如果使用中遇到困难，可以查阅[使用说明](/)、观看[我的B站视频](https://space.bilibili.com/592120404/video)，也欢迎加入[QQ群](https://qm.qq.com/q/mPSu3sG5ri)。"
-    t2 = "软件维护不易，如果您感觉该软件对你有帮助，欢迎通过[爱发电](https://afdian.com/a/HIllya51)，或[微信扫码](WEIXIN)赞助，您的支持将成为软件长期维护的助力，谢谢~"
-    t5 = "如果使用中遇到困難，可以查閱[使用說明](/)、觀看[我的 B 站影片](https://space.bilibili.com/592120404/video)，也歡迎加入 [Discord](https://discord.com/invite/ErtDwVeAbhtB)／[QQ 群](https://qm.qq.com/q/mPSu3sG5ri)。"
-    t6 = "如果使用中遇到困难，可以查阅[使用说明](/)，也欢迎加入[Discord](https://discord.com/invite/ErtDwVeAbB)。"
-    t4 = "软件维护不易，如果您感觉该软件对你有帮助，欢迎通过[patreon](https://patreon.com/HIllya51)支持我，您的支持将成为软件长期维护的助力，谢谢~"
-    if lang == Languages.Chinese:
-        return "\n\n".join([t3, t2])
-
-    elif lang == Languages.TradChinese:
-        return "\n\n".join([t5, _TR(t4)])
-    else:
-        return _TR("\n\n".join([t6, t4]))
+    return ""
 
 
 def load_scaled_pixmap(
