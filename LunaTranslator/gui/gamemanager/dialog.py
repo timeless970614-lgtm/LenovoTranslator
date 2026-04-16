@@ -54,6 +54,7 @@ class dialog_savedgame_integrated(saveposwindow):
         self.syssettingbtn.setVisible(type != 0)
         try:
             globalconfig["gamemanager_integrated_internal_layout"] = type
+            self.do_resize()
             klass = [
                 dialog_savedgame_legacy,
                 dialog_savedgame_v3,
@@ -87,7 +88,11 @@ class dialog_savedgame_integrated(saveposwindow):
         self.internallayout.addWidget(QWidget())
         self.setCentralWidget(w)
 
-        self.switch = threeswitch(self, icons=["fa.list", "fa.th-list", "fa.th"])
+        self.switch = threeswitch(
+            self,
+            icons=["fa.list", "fa.th-list", "fa.th"],
+            Direction=QBoxLayout.Direction.TopToBottom,
+        )
         self.switch.btnclicked.connect(self.selectlayout)
         self.syssettingbtn = IconButton(icon="fa.gear", parent=self, tips="界面设置")
         self.syssettingbtn.clicked.connect(self.syssetting)
@@ -106,10 +111,18 @@ class dialog_savedgame_integrated(saveposwindow):
         self.do_resize()
 
     def do_resize(self, _=None):
-        x = self.width() - self.switch.width()
-        self.switch.move(x, 0)
-        x -= self.syssettingbtn.width()
-        self.syssettingbtn.move(x, 0)
+        if globalconfig["gamemanager_integrated_internal_layout"] in (2,):
+            self.switch.setDirection(QBoxLayout.Direction.TopToBottom)
+            self.switch.move(0, self.height() - self.switch.height())
+            self.syssettingbtn.move(
+                0, self.height() - self.switch.height() - self.syssettingbtn.height()
+            )
+        else:
+            self.switch.setDirection(QBoxLayout.Direction.LeftToRight)
+            x = self.width() - self.switch.width()
+            self.switch.move(x, 0)
+            x -= self.syssettingbtn.width()
+            self.syssettingbtn.move(x, 0)
 
 
 class TagWidget(QWidget):
@@ -123,7 +136,6 @@ class TagWidget(QWidget):
         layout = QHBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
-
         self.lineEdit = FocusCombo()
         if exfoucus:
             self.lineEdit.setLineEdit(FQLineEdit())
@@ -440,7 +452,7 @@ class ItemWidget(QWidget):
         self.setToolTip(self._lb.text())
 
 
-class dialog_savedgame_new(QWidget):
+class dialog_savedgame_new(QSplitter):
 
     def dragEnterEvent(self, event: QDragEnterEvent):
         if event.mimeData().hasUrls():
@@ -501,7 +513,6 @@ class dialog_savedgame_new(QWidget):
         newtags = tags
         self.idxsave.clear()
         ItemWidget.clearfocus()
-        self.formLayout.removeWidget(self.flow)
         self.flow.hide()
         self.flow.deleteLater()
         self.flow = lazyscrollflow(self.keypressed)
@@ -514,7 +525,7 @@ class dialog_savedgame_new(QWidget):
             )
         )
         self.flow.setSpacing(globalconfig["dialog_savegame_layout"]["margin"])
-        self.formLayout.insertWidget(self.formLayout.count(), self.flow)
+        self.flowcontainer.addWidget(self.flow)
         idx = 0
         for k in self.reflistx:
             if newtags != self.currtags:
@@ -554,7 +565,6 @@ class dialog_savedgame_new(QWidget):
                 continue
             self.newline(k, idx == 0)
             idx += 1
-
         self.flow.directshow()
 
     def showmenu(self, p):
@@ -683,6 +693,7 @@ class dialog_savedgame_new(QWidget):
         self.reftagid = uid
         self.reflist = getreflist(uid)
         self.tagschanged(self.currtags)
+        self.vislistcombo.setFocus()
 
     def loadcombo(self, init):
         vis, uid = loadvisinternal()
@@ -775,15 +786,33 @@ class dialog_savedgame_new(QWidget):
             )
             self.tagschanged(self.currtags)
 
+    def event(self, e: QEvent):
+        if e.type() == QEvent.Type.FontChange:
+            self.topw.setFixedHeight(self.topw.sizeHint().height())
+        return super().event(e)
+
+    def createHandle(self):
+        class MySplitterHandle(QSplitterHandle):
+            def paintEvent(self1, event):
+                if self1.underMouse():
+                    super().paintEvent(event)
+                else:
+                    pass
+
+        return MySplitterHandle(self.orientation(), self)
+
     def __init__(self, parent) -> None:
         super().__init__(parent)
         self._parent = parent
         self.setstyle()
         dialog_savedgame_new.reference = self
-        formLayout = QVBoxLayout(self)
-        formLayout.setContentsMargins(0, 0, 0, 0)
-        formLayout.setSpacing(1)
-        layout = QHBoxLayout()
+        self.setObjectName("NOBORDER")
+        self.setOrientation(Qt.Orientation.Vertical)
+        self.setHandleWidth(1)
+        _w = QWidget()
+        self.topw = _w
+        layout = QHBoxLayout(_w)
+        layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
         self.setAcceptDrops(True)
         self.__layout = layout
@@ -795,21 +824,20 @@ class dialog_savedgame_new(QWidget):
 
         self.currtags = tuple()
         self.tagswidget.tagschanged.connect(self.tagschanged)
-        self.___ = threeswitch(self, [None, None, None, None])
-        self.___.setStyleSheet("background:transparent")
         layout.addWidget(self.tagswidget)
         layout.addWidget(
             getIconButton(
                 icon="fa.sort-amount-asc", callback=self.sortgamecallback, tips="排序"
             )
         )
-        layout.addWidget(self.___)
-        formLayout.addLayout(layout)
+        self.addWidget(_w)
+        __ = QWidget()
+        self.flowcontainer = QHBoxLayout(__)
+        self.flowcontainer.setContentsMargins(0, 0, 0, 0)
         self.flow = QWidget()
         self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.customContextMenuRequested.connect(self.showmenu)
-        formLayout.addWidget(self.flow)
-        self.formLayout = formLayout
+        self.addWidget(__)
         self.savebutton = []
 
         self.idxsave = []
@@ -820,6 +848,13 @@ class dialog_savedgame_new(QWidget):
         else:
             self.tagschanged(tuple())
         self.installEventFilter(self)
+
+        def __(_):
+            globalconfig["dialogsplit"] = self.sizes()
+
+        if "dialogsplit" in globalconfig:
+            self.setSizes(globalconfig["dialogsplit"])
+        self.splitterMoved.connect(__)
 
     def eventFilter(self, obj, _):
         try:

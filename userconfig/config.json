@@ -365,10 +365,10 @@
         800
     ],
     "transuigeo": [
-        487,
-        174,
+        551,
+        31,
         949,
-        195
+        174
     ],
     "geo_extrahtml": [
         100,
@@ -504,7 +504,7 @@
     "setting_geo_2": [
         18,
         90,
-        800,
+        382,
         600
     ],
     "global_namemap2": [],
@@ -2017,7 +2017,7 @@
     ],
     "selectable": true,
     "selectableEx": false,
-    "autoupdate": true,
+    "autoupdate": false,
     "proxies": null,
     "viewlistpos": 0,
     "wordlabel": [],
@@ -2032,11 +2032,6 @@
     "languageuse2": "zh",
     "rendertext_using": "webview",
     "lasttime3": 1776136948.2252913,
-    "lasttime2": 1776168513.521091,
-    "load_doc_or_log": [
-        10,
-        15,
-        6,
-        25
-    ]
+    "lasttime2": 1776334245.7184522,
+    "load_doc_or_log": null
 }
