@@ -333,6 +333,7 @@ def setTab_about(self: QWidget, basel):
                     grid=[
                         ["UI语言", __delayloadlangs],
                         ["开发者", lambda: QLabel("zhoushang2")],
+                        ["技术栈", lambda: QLabel("Python 3.13 / Qt (PyQt5/PySide6) / 嵌入式 Python 解释器")],
                     ],
                 ),
             ],
