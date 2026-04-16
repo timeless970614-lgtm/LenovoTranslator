@@ -1,6 +1,6 @@
 ﻿from qtsymbols import *
 import functools, re
-from myutils.config import globalconfig, static_data, _TR, dynamiclink
+from myutils.config import globalconfig, static_data, _TR, dynamiclink, saveallconfig
 from myutils.wrapper import threader
 from myutils.utils import makehtml, getlanguse
 from myutils.hwnd import getcurrexe
@@ -174,7 +174,32 @@ class MDLabel1(MDLabel):
 
 
 def get_about_info():
-    return ""
+    if globalconfig.get("_guided"):
+        return ""
+    globalconfig["_guided"] = True
+    saveallconfig()
+    return """## 👋 欢迎使用 LenovoTranslator
+
+**鼠标悬停**在工具栏图标上可查看功能说明
+
+**快速上手：**
+1. 点击 ⚙ 设置 → 添加翻译引擎 API
+2. 点击 🔗 选择游戏 → 附加到要翻译的窗口
+3. 翻译内容会自动显示在窗口中
+
+**常用图标说明：**
+
+| 图标 | 功能 |
+|------|------|
+| 🔄 | 手动执行翻译 |
+| ⏩ | 自动模式（推荐开启） |
+| ⚙ | 打开设置 |
+| 🔗 | 附加到游戏窗口 |
+| 📋 | 复制翻译结果 |
+| 👁 | 显示/隐藏原文 |
+| 🔍 | OCR 文字识别 |
+
+开启**自动模式**后，翻译会自动进行，无需手动操作。"""
 
 
 def load_scaled_pixmap(
