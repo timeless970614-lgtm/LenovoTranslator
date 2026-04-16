@@ -74,7 +74,6 @@ from tts.basettsclass import TTSbase
 from cishu.cishubase import cishubase
 from translator.basetranslator import basetrans
 from textio.textoutput.outputerbase import Base as outputerbase
-from myutils.updater import versioncheckthread
 from gui.qevent import DarkLightChangedEvent
 from gui.setting.translate import autostartllamacpp
 
@@ -91,7 +90,6 @@ class BASEOBJECT(QObject):
     progresssignal2 = pyqtSignal(str, int)
     progresssignal3 = pyqtSignal(int)
     progresssignal4 = pyqtSignal(str, int)
-    versiontextsignal = pyqtSignal(str)
     clipboardcallback = pyqtSignal(bool, str)
     hover_search_word = pyqtSignal(str, str, bool, bool, bool)
     settin_ui_showsignal = pyqtSignal()
@@ -168,7 +166,6 @@ class BASEOBJECT(QObject):
         self.__connect_internal(self.progresssignal2)
         self.__connect_internal(self.progresssignal3)
         self.__connect_internal(self.progresssignal4)
-        self.__connect_internal(self.versiontextsignal)
         self.__connect_internal(self.showandsolvesig)
         self.createimageviewsig.connect(self.createimageview)
         self.RichMessageBox.connect(
@@ -191,7 +188,6 @@ class BASEOBJECT(QObject):
         super().__init__()
         self.initsignals()
         self.currentisdark = None
-        self.update_avalable = False
         self.translators: "dict[str, basetrans]" = {}
         self.cishus: "dict[str, cishubase]" = {}
         self.specialreaders: "dict[object, TTSbase]" = {}
@@ -219,7 +215,6 @@ class BASEOBJECT(QObject):
         self.__hwnd = None
         self.gameuid = 0
         self.autoswitchgameuid = True
-        self.istriggertoupdate = False
         self.service = TCPService()
         registerall(self.service)
 
@@ -1382,10 +1377,6 @@ class BASEOBJECT(QObject):
     def __trayclicked(self):
         self.trayclicked()
 
-    def triggertoupdate(self):
-        self.istriggertoupdate = True
-        NativeUtils.dispatchcloseevent()
-
     def leftclicktray(self, reason):
         if reason == QSystemTrayIcon.ActivationReason.Trigger:
             self.translation_ui.showhideui()
@@ -1565,7 +1556,6 @@ class BASEOBJECT(QObject):
         self.somedatabase = somedatabase()
         self.urlprotocol()
         self.serviceinit()
-        versioncheckthread()
         autostartllamacpp()
 
     @property

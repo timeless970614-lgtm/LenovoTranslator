@@ -26,7 +26,6 @@ from myutils.utils import (
     find_or_create_uid,
 )
 from myutils.hwnd import mouseselectwindow, grabwindow, getExeIcon, getcurrexe
-from myutils.updater import doupdate
 from gui.qevent import TransparentChangedEvent
 from gui.dialog_memory import dialog_memory
 from gui.rendertext.texttype import TextType, SpecialColor
@@ -1877,7 +1876,6 @@ class TranslatorWindow(resizableframeless):
                         "\n\n".join(errors),
                     )
                 self.tryremoveuseless()
-                doupdate()
         except:
             print_exc()
 
