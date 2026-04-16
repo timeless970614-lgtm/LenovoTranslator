@@ -3,6 +3,7 @@ import functools, re
 from myutils.config import globalconfig, static_data, _TR, dynamiclink
 from myutils.wrapper import threader
 from myutils.utils import makehtml, getlanguse
+from myutils.hwnd import getcurrexe
 import requests, importlib
 import gobject
 import os, NativeUtils
@@ -317,6 +318,16 @@ class __delayloadlangs(QHBoxLayout):
         )
 
 
+def _get_version_text():
+    try:
+        version = NativeUtils.QueryVersion(getcurrexe())
+        if version:
+            return "v" + ".".join(str(_) for _ in version)
+    except:
+        pass
+    return "未知"
+
+
 def setTab_about(self: QWidget, basel):
     def ____():
         tabadd_lazy(
@@ -331,6 +342,7 @@ def setTab_about(self: QWidget, basel):
                     name="aboutlayout",
                     parent=self,
                     grid=[
+                        ["版本", lambda: QLabel(_get_version_text())],
                         ["UI语言", __delayloadlangs],
                         ["开发者", lambda: QLabel("zhoushang2")],
                         ["技术栈", lambda: QLabel("Python 3.13 / Qt (PyQt5/PySide6) / 嵌入式 Python 解释器")],
