@@ -15,7 +15,7 @@ LenovoTranslator 是一款专为游戏文本翻译设计的工具，支持多种
 
 ## 版本信息
 
-- **版本**: v10.15.6.25
+- **版本**: LenovoTranslator-V1.0.0.1
 - **开发者**: zhoushang2
 
 ## 快速开始
