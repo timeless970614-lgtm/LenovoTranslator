@@ -7,8 +7,8 @@ from gui.usefulwidget import closeashidewindow, makesubtab_lazy
 from gui.setting.textinput import setTabOne_lazy
 from gui.setting.translate import setTabTwo_lazy
 from gui.setting.display import setTabThree_lazy
-from gui.setting.transopti import setTab7_lazy
 from gui.setting.hotkey import setTab_quick, registrhotkeys
+from gui.setting.transopti import setTab7_lazy
 from gui.setting.about import setTab_about
 from gui.dynalang import LListWidgetItem, LListWidget
 
@@ -85,6 +85,7 @@ class Setting(closeashidewindow):
         super().showEvent(e)
 
     def firstshow(self):
+
         self.setMinimumSize(100, 100)
         self.setWindowTitleWithVersionWithUserconfig("设置")
 
@@ -111,4 +112,6 @@ class Setting(closeashidewindow):
         self.setCentralWidget(self.tab_widget)
         do()
         self.tab_widget.adjust_list_widget_width()
-        self.tab_widget.setCurrentIndex(0)
+        index = 0
+        self.tab_widget.setCurrentIndex(index)
+        gobject.base.switchtotspage.connect(lambda: self.tab_widget.setCurrentIndex(1))
