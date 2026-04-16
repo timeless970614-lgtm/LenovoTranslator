@@ -1,29 +1,16 @@
 from qtsymbols import *
-import functools, re
-from myutils.config import globalconfig, static_data, _TR, dynamiclink
+import functools
+from myutils.config import globalconfig, _TR
 from myutils.wrapper import threader
 from myutils.utils import makehtml, getlanguse
-import requests, importlib
+import requests
 import gobject
-import os, NativeUtils
-from traceback import print_exc
+import os
 from gui.usefulwidget import (
-    D_getsimpleswitch,
     makescrollgrid,
-    createfoldgrid,
     SuperCombo,
-    getsmalllabel,
-    getboxlayout,
-    NQGroupBox,
-    LinkLabel,
-    SClickableLabel,
-    VisLFormLayout,
-    D_getIconButton,
-    tabadd_lazy,
 )
-from gui.setting.setting_year import yearsummary
 from language import UILanguages, Languages
-from myutils.updater import versionchecktask
 
 
 def createversionlabel():
@@ -173,7 +160,19 @@ class MDLabel1(MDLabel):
 
 
 def get_about_info():
-    return ""
+    lang = getlanguse()
+    t3 = "如果使用中遇到困难，可以查阅[使用说明](/)、观看[我的B站视频](https://space.bilibili.com/592120404/video)，也欢迎加入[QQ群](https://qm.qq.com/q/mPSu3sG5ri)。"
+    t2 = "软件维护不易，如果您感觉该软件对你有帮助，欢迎通过[爱发电](https://afdian.com/a/HIllya51)，或[微信扫码](WEIXIN)赞助，您的支持将成为软件长期维护的助力，谢谢~"
+    t5 = "如果使用中遇到困難，可以查閱[使用說明](/)、觀看[我的 B 站影片](https://space.bilibili.com/592120404/video)，也歡迎加入 [Discord](https://discord.com/invite/ErtDwVeAbhtB)／[QQ 群](https://qm.qq.com/q/mPSu3sG5ri)。"
+    t6 = "如果使用中遇到困难，可以查阅[使用说明](/)，也欢迎加入[Discord](https://discord.com/invite/ErtDwVeAbB)。"
+    t4 = "软件维护不易，如果您感觉该软件对你有帮助，欢迎通过[patreon](https://patreon.com/HIllya51)支持我，您的支持将成为软件长期维护的助力，谢谢~"
+    if lang == Languages.Chinese:
+        return "\n\n".join([t3, t2])
+
+    elif lang == Languages.TradChinese:
+        return "\n\n".join([t5, _TR(t4)])
+    else:
+        return _TR("\n\n".join([t6, t4]))
 
 
 def load_scaled_pixmap(
@@ -229,7 +228,30 @@ class aboutwidget(NQGroupBox):
         self.grid.addRow(lb)
 
     def updatelangtext(self):
-        pass
+        self.mdlabel.setMD(get_about_info())
+        lang = getlanguse()
+        for _ in self.labels:
+            _.deleteLater()
+        self.labels.clear()
+        if lang == Languages.Chinese:
+            self.createlabel(
+                "files/static/button-sponsorme.png",
+                200,
+                "https://afdian.com/a/HIllya51",
+            )
+            self.createlabel("files/static/zan.jpg", 300)
+        elif lang == Languages.TradChinese:
+            self.createlabel(
+                "files/static/become_a_patron_4x1_black_logo_white_text_on_coral.svg",
+                200,
+                "https://patreon.com/HIllya51",
+            )
+        else:
+            self.createlabel(
+                "files/static/become_a_patron_4x1_black_logo_white_text_on_coral.svg",
+                200,
+                "https://patreon.com/HIllya51",
+            )
 
 
 class delayloadsvg(QSvgWidget):
@@ -304,6 +326,7 @@ def setTab_about(self: QWidget, basel):
                     parent=self,
                     grid=[
                         ["UI语言", __delayloadlangs],
+                        ["开发者", "zhoushang2"],
                     ],
                 ),
             ],
