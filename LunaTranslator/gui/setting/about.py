@@ -321,11 +321,11 @@ class __delayloadlangs(QHBoxLayout):
 def _get_version_text():
     try:
         version = NativeUtils.QueryVersion(getcurrexe())
-        if version:
+        if version and version != (0, 0, 0, 0):
             return "v" + ".".join(str(_) for _ in version)
     except:
         pass
-    return "未知"
+    return "v0.0.0.1"
 
 
 def setTab_about(self: QWidget, basel):
