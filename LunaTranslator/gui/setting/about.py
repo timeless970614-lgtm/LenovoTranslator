@@ -9,6 +9,8 @@ import os
 from gui.usefulwidget import (
     makescrollgrid,
     SuperCombo,
+    VisLFormLayout,
+    LinkLabel,
 )
 from language import UILanguages, Languages
 
