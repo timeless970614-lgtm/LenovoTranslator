@@ -450,18 +450,7 @@ def initsome11(self, l, save=False):
 def initsome21(self, not_is_gpt_like):
     not_is_gpt_like = initsome11(self, not_is_gpt_like)
     # not_is_gpt_like += [[(functools.partial(offlinelinks, "translate"), 0)]]
-    grids = [
-        [
-            functools.partial(
-                createfoldgrid,
-                not_is_gpt_like,
-                "过时的",
-                globalconfig["foldstatus"]["ts"],
-                "outdate",
-            )
-        ],
-    ]
-    return grids
+    return []
 
 
 def __create(download, keydir, key, check, curropen):
@@ -1853,18 +1842,9 @@ def leftwidget(self, ref: "list[CollapsibleBoxWithButton]"):
     if not loadvisinternal(True)[0]:
         btn2.hide()
 
-    btn3 = IconButton(
-        "fa.question",
-        fix=False,
-        tips="使用说明",
-    )
-    btn3.clicked.connect(
-        lambda: os.startfile(dynamiclink("guochandamoxing.html", docs=True))
-    )
-
     lb = QLabel()
     lb.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-    return [btn3, btn, btn2, lb]
+    return [btn, btn2, lb]
 
 
 def __llmfold(self):
@@ -1911,14 +1891,6 @@ def initsome2(self, mianfei, api):
                 "传统_API",
                 globalconfig["foldstatus"]["ts"],
                 "api",
-                leftwidget=D_getIconButton(
-                    fix=False,
-                    icon="fa.question",
-                    callback=lambda: os.startfile(
-                        dynamiclink("useapis/tsapi.html", docs=True)
-                    ),
-                    tips="使用说明",
-                ),
             )
         ],
     ]
@@ -2077,20 +2049,8 @@ def setTabTwo_lazy(self, basel: QVBoxLayout):
     prets += [[(functools.partial(createbtnexport, self), 0)]]
     pretransgrid = [
         [dict(type="grid", title="预翻译", grid=prets)],
-        [dict(type="grid", title="其他", grid=initsome11(self, res.other))],
     ]
     pretransgrid += offlinegrid
-    pretransgrid = [
-        [
-            functools.partial(
-                createfoldgrid,
-                pretransgrid,
-                "其他",
-                globalconfig["foldstatus"]["ts"],
-                "special",
-            )
-        ],
-    ]
     online_reg_grid += pretransgrid
     savelay = []
     makescrollgrid(online_reg_grid, basel, savelay=savelay)

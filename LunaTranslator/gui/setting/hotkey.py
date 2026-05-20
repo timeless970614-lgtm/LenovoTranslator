@@ -454,7 +454,6 @@ def setTab_quick_lazy(self, ls):
     for name in ls:
         d = globalconfig["quick_setting"]["all"][name]
         l = [
-            D_getdoclink("fastkeys.html#anchor-" + name),
             (d["name"], 2),
             D_getsimpleswitch(
                 d,

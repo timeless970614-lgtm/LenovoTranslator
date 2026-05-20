@@ -428,7 +428,6 @@ def internal(self):
                 title="离线",
                 type="grid",
                 grid=offgrids,
-                button=D_getdoclink("useapis/ocrapi.html#anchor-offline"),
             )
         ],
         [
@@ -436,7 +435,6 @@ def internal(self):
                 title="在线",
                 type="grid",
                 grid=initgridsources(self, online),
-                button=D_getdoclink("useapis/ocrapi.html#anchor-online"),
             )
         ],
         [

@@ -58,7 +58,6 @@ def __create2():
 
 def gethookgrid_em(self):
     grids = [
-        [D_getdoclink("embedtranslate.html")],
         [
             "清除游戏内显示的文字",
             D_getsimpleswitch(
@@ -152,7 +151,6 @@ def gethookgrid_em(self):
 
 def gethookgrid():
     grids = [
-        [D_getdoclink("hooksettings.html")],
         [
             "代码页",
             (
@@ -629,7 +627,6 @@ def filetranslate(self):
                 "语音识别",
                 globalconfig["foldstatus"]["others"],
                 "sr",
-                leftwidget=D_getdoclink("sr.html"),
             )
         ],
         [
@@ -639,25 +636,6 @@ def filetranslate(self):
                 "文件翻译",
                 globalconfig["foldstatus"]["others"],
                 "fts",
-            )
-        ],
-        [
-            functools.partial(
-                createfoldgrid,
-                [["使用代理", proxyusage]],
-                "代理设置",
-                globalconfig["foldstatus"]["others"],
-                "proxy",
-            )
-        ],
-        [
-            functools.partial(
-                createfoldgrid,
-                functools.partial(getnetgrid, self),
-                "网络服务",
-                globalconfig["foldstatus"]["others"],
-                "netservice",
-                leftwidget=D_getdoclink("apiservice.html"),
             )
         ],
     ]

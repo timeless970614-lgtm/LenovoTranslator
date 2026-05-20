@@ -164,7 +164,6 @@ def setTab7_lazy(self, basel: QLayout):
         )
 
         l = [
-            D_getdoclink("textprocess.html#anchor-" + post),
             ((postprocessconfig[post]["name"]), 5),
             D_getsimpleswitch(postprocessconfig[post], "use"),
             config,
@@ -182,7 +181,6 @@ def setTab7_lazy(self, basel: QLayout):
         if checkpostlangmatch(name):
             grids2.append(
                 [
-                    D_getdoclink("transoptimi.html#anchor-" + name),
                     ((visname), 5),
                     D_getsimpleswitch(globalconfig["transoptimi"], name),
                 ]

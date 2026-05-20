@@ -329,7 +329,7 @@ def _get_version_text():
             return "v" + ".".join(str(_) for _ in version)
     except:
         pass
-    return "v0.0.0.1"
+    return "v0.0.0.2"
 
 
 def setTab_about(self: QWidget, basel):
