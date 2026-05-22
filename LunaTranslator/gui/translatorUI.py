@@ -164,20 +164,18 @@ class ButtonBar(QFrame):
         super().__init__(*argc)
         self.v = False
 
-        def __(p: QBoxLayout = None, pp=None):
+        def __(p: QBoxLayout = None, pp=None, stretch=0):
             _ = QBoxLayout(QBoxLayout.Direction.LeftToRight, pp)
             _.setContentsMargins(0, 0, 0, 0)
             _.setSpacing(0)
             if p is not None:
-                p.addLayout(_)
+                p.addLayout(_, stretch)
             return _
 
         self.threelayout = __(pp=self)
-        self._left = __(self.threelayout)
-        self.threelayout.addStretch()
-        self._center = __(self.threelayout)
-        self.threelayout.addStretch()
-        self._right = __(self.threelayout)
+        self._left = __(self.threelayout, stretch=1)
+        self._center = __(self.threelayout, stretch=1)
+        self._right = __(self.threelayout, stretch=1)
         self.cntbtn = 0
         self.buttons: "dict[str, IconLabelX]" = {}
         self.stylebuttons: "dict[str, list]" = {}
@@ -278,6 +276,12 @@ class ButtonBar(QFrame):
     def adjustbuttons(self):
         __ = [self._left, self._right, self._center]
         cnt = 0
+        # 清空所有布局
+        for layout in __:
+            while layout.count():
+                layout.takeAt(0)
+        # 收集每个区域的按钮
+        buttons_by_align = {0: [], 1: [], 2: []}  # 0=左, 1=右, 2=中
         for name in globalconfig["toolbutton"]["rank2"]:
             button: IconLabelX = self.buttons[name]
             if button.belong:
@@ -298,11 +302,17 @@ class ButtonBar(QFrame):
             ):
                 button.hideinlayout()
                 continue
-            layout: QBoxLayout = __[
-                globalconfig["toolbutton"]["buttons"][name]["align"]
-            ]
-            button.showinlayout(layout)
+            align = globalconfig["toolbutton"]["buttons"][name]["align"]
+            buttons_by_align[align].append(button)
             cnt += 1
+        # 重新添加按钮到各自区域，并在前后添加 stretch 让按钮居中
+        for align, buttons in buttons_by_align.items():
+            layout: QBoxLayout = __[align]
+            if buttons:
+                layout.addStretch(1)
+                for button in buttons:
+                    button.showinlayout(layout)
+                layout.addStretch(1)
         self.cntbtn = cnt
         self.adjustminwidth()
 
@@ -864,6 +874,13 @@ class TranslatorWindow(resizableframeless):
                 ),
             ),
             ("reset_TS_status", buttonfunctions(clicked=gobject.base.prepare)),
+            (
+                "smarttrans",
+                buttonfunctions(
+                    clicked=self.toggleSmartTranslate,
+                    colorstate=lambda: globalconfig.get("smarttrans_enabled", False),
+                ),
+            ),
         )
 
         _type = {"quit": 2}
@@ -1743,6 +1760,37 @@ class TranslatorWindow(resizableframeless):
             t = gobject.base.currenttext
             isFromHook = False
         gobject.base.textgetmethod(t, is_auto_run=False, isFromHook=isFromHook)
+
+    def smartTranslate(self):
+        """智能翻译：自动识别文本语言，仅在需要时翻译"""
+        t = None
+        isFromHook = isinstance(gobject.base.textsource, texthook)
+        if gobject.base.textsource:
+            t = gobject.base.textsource.gettextonce()
+        if not t:
+            t = gobject.base.currenttext
+            isFromHook = False
+        if t:
+            # 检测文本语言，如果是目标语言则不翻译
+            try:
+                from myutils.utils import checklang_usinglist
+                srclang = checklang_usinglist(t)
+                targetlang = globalconfig.get("tgtlang4", "ja")
+                if srclang == targetlang:
+                    # 文本已是目标语言，不翻译
+                    return
+            except:
+                pass
+            gobject.base.textgetmethod(t, is_auto_run=False, isFromHook=isFromHook)
+
+    def toggleSmartTranslate(self):
+        """切换智能翻译开关状态"""
+        globalconfig["smarttrans_enabled"] = not globalconfig.get("smarttrans_enabled", False)
+        self.refreshtoolicon()
+
+    def isSmartTranslateEnabled(self):
+        """检查智能翻译是否开启"""
+        return globalconfig.get("smarttrans_enabled", False)
 
     def toolbarhidedelay(self):
 
